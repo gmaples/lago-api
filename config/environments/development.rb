@@ -61,6 +61,16 @@ Rails.application.configure do
   config.hosts << "api.lago.dev"
   config.hosts << "api"
 
+  # Allow Gitpod hostname for development
+  if ENV["GITPOD_WORKSPACE_ID"].present? && ENV["GITPOD_WORKSPACE_CLUSTER_HOST"].present?
+    gitpod_host = "3000-#{ENV["GITPOD_WORKSPACE_ID"]}.#{ENV["GITPOD_WORKSPACE_CLUSTER_HOST"]}"
+    config.hosts << gitpod_host
+  end
+
+  # Allow localhost variations
+  config.hosts << "localhost"
+  config.hosts << "127.0.0.1"
+
   config.license_url = ENV.fetch("LAGO_LICENSE_URL", "http://license:3000")
 
   config.action_mailer.perform_caching = false
